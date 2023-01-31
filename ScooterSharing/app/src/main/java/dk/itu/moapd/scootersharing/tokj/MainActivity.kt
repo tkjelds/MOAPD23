@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
     private val scooter = Scooter("","")
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        supportActionBar?.hide()
         WindowCompat.setDecorFitsSystemWindows ( window , false)
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
