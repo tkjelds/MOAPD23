@@ -21,56 +21,38 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package dk.itu.moapd.scootersharing.tokj
+package dk.itu.moapd.scootersharing.tokj.Pages
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
 import androidx.core.view.WindowCompat
 import com.google.android.material.snackbar.Snackbar
+import dk.itu.moapd.scootersharing.tokj.Model.Scooter
 import dk.itu.moapd.scootersharing.tokj.databinding.ActivityMainBinding
-import java.security.cert.TrustAnchor
 
 class MainActivity : AppCompatActivity() {
     companion object {
         private val TAG = MainActivity::class.qualifiedName
     }
     private lateinit var binding : ActivityMainBinding
-    private val scooter = Scooter("","")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows ( window , false)
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val scooterIDText = binding.editScooterID
-        val locationText = binding.editLocationText
-        val letsRideButton = binding.letsRideButton
-
-        letsRideButton.setOnClickListener {
-            if (scooterIDText.text.isNotEmpty() &&
-                    locationText.text.isNotEmpty()){
-                val name = scooterIDText.text.toString().trim();
-                val location =  locationText.text.toString().trim()
-                scooter.name = name
-                scooter.location = location
-                locationText.text.clear()
-                scooterIDText.text.clear()
-                showScooterSnackBar(binding.root,scooter,letsRideButton)
-            }
+        val startRideButton = binding.startRideButton
+        val updateRideButton = binding.updateRideButton
+        startRideButton.setOnClickListener {
+            val intent = Intent(this,StartRideActivity::class.java)
+            startActivity(intent)
         }
-    }
-
-    /**
-     * @return Logs the scooter to the console
-     */
-    fun showScooterSnackBar(context: View, scooter: Scooter,anchor: View){
-        Snackbar.make(context, scooter.toString(), Snackbar.LENGTH_SHORT).setAnchorView(anchor).show()
-    }
-    fun showScooterLog() {
-        Log.d(TAG, scooter.toString())
+        updateRideButton.setOnClickListener {
+            val intent = Intent(this,UpdateRideActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

@@ -21,7 +21,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package dk.itu.moapd.scootersharing.tokj
+package dk.itu.moapd.scootersharing.tokj.Model
+
+import java.text.SimpleDateFormat
+import java.util.Date
 
 /**
  * A data class of a Scooter.
@@ -30,12 +33,18 @@ package dk.itu.moapd.scootersharing.tokj
  * @param name Represents the name of the scooter
  * @param location Represents the location of the scooter
  */
-data class Scooter(var name: String, var location: String)
+data class Scooter(var name: String, var location: String, var timestamp: Long)
 {
     /**
      * @return Returns a formated string the of the scooter.
      */
     override fun toString() : String {
-        return "ScooterId = $name , ScooterLocation = $location"
+        return "ScooterId = $name , ScooterLocation = $location, TimeStamp = ${convertLongToTime()}."
+    }
+
+    fun convertLongToTime():String {
+        val date = Date(this.timestamp)
+        val format = SimpleDateFormat("yyyy.MM.dd HH:mm")
+        return format.format(date)
     }
 }
