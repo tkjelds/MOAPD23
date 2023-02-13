@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tool="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -23,7 +22,8 @@
             android:id="@+id/edit_scooter_ID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/enter_scooter_id"/>
+            android:focusable="false"
+            android:text="@string/enter_scooter_id" />
 
     </LinearLayout>
 
@@ -42,18 +42,19 @@
             android:id="@+id/edit_location_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/enter_your_location"/>
+            android:text="@string/enter_your_location" />
 
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
-        android:layout_height="20dp">
-    </View>
+        android:layout_height="20dp"></View>
+
     <Button
+        android:id="@+id/lets_ride_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/update_ride"
-        android:id="@+id/lets_ride_button"/>
+        android:text="@string/update_ride" />
 
 
 </LinearLayout>

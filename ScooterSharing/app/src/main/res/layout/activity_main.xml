@@ -48,5 +48,9 @@
             android:text="@string/update_ride" />
     </LinearLayout>
 
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/scooter_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="300sp"
+        tool:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 </LinearLayout>

@@ -33,16 +33,15 @@ import java.util.Date
  * @param name Represents the name of the scooter
  * @param location Represents the location of the scooter
  */
-data class Scooter(var name: String, var location: String, var timestamp: Long)
-{
+data class Scooter(val name: String, var location: String, var timestamp: Long) {
     /**
      * @return Returns a formated string the of the scooter.
      */
-    override fun toString() : String {
+    override fun toString(): String {
         return "ScooterId = $name , ScooterLocation = $location, TimeStamp = ${convertLongToTime()}."
     }
 
-    fun convertLongToTime():String {
+    fun convertLongToTime(): String {
         val date = Date(this.timestamp)
         val format = SimpleDateFormat("yyyy.MM.dd HH:mm")
         return format.format(date)
