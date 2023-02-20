@@ -41,79 +41,20 @@ import dk.itu.moapd.scootersharing.tokj.databinding.ActivityMainBinding
 import java.util.jar.Attributes.Name
 
 class MainActivity : AppCompatActivity() {
-    companion object {
-        lateinit var ridesDB: RidesDB
-    }
-
-    private lateinit var binding: ActivityMainBinding
+    companion object;
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
-        ridesDB = RidesDB.get(this)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        val startRideButton = binding.startRideButton
-        val updateRideButton = binding.updateRideButton
-        val scooterList = binding.scooterRecyclerView
-        scooterList.adapter = ScooterAdapter(ridesDB.getRidesList())
-        startRideButton.setOnClickListener {
-            val intent = Intent(this, StartRideActivity::class.java)
-            startActivity(intent)
+        setContentView(R.layout.activity_main)
+
+        val currentFragment =
+            supportFragmentManager.findFragmentById(R.id.MainActivityFragmentContainer)
+
+        if (currentFragment == null) {
+            val fragment = MainFragment()
+            supportFragmentManager.beginTransaction()
+                .add(R.id.MainActivityFragmentContainer, fragment).commit()
         }
-        updateRideButton.setOnClickListener {
-            val intent = Intent(this, UpdateRideActivity::class.java)
-            startActivity(intent)
-        }
+
     }
-}
-
-class ScooterAdapter(private val scooterDB: List<Scooter>) :
-    RecyclerView.Adapter<ScooterAdapter.ViewHolder>() {
-
-    /**
-     * Provide a reference to the type of views that you are using
-     * (custom ViewHolder)
-     */
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val NametextView: TextView
-        val LocationtextView: TextView
-        val TimeStamptextView: TextView
-        lateinit var scooter: Scooter
-
-        init {
-            // Define click listener for the ViewHolder's View
-            NametextView = view.findViewById(R.id.scooterName)
-            LocationtextView = view.findViewById(R.id.location)
-            TimeStamptextView = view.findViewById(R.id.timeStamp)
-            NametextView.setOnClickListener {
-                Snackbar.make(view, scooter.toString(), Snackbar.LENGTH_SHORT)
-                    .setAnchorView(NametextView).show()
-            }
-        }
-    }
-
-    // Create new views (invoked by the layout manager)
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-        // Create a new view, which defines the UI of the list item
-        val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.list_rides, viewGroup, false)
-
-        return ViewHolder(view)
-    }
-
-    // Replace the contents of a view (invoked by the layout manager)
-    override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-
-        // Get element from your dataset at this position and replace the
-        // contents of the view with that element
-        val scooter = scooterDB.get(position)
-        viewHolder.scooter = scooter
-        viewHolder.NametextView.text = scooter.name
-        viewHolder.LocationtextView.text = scooter.location
-        viewHolder.TimeStamptextView.text = scooter.convertLongToTime()
-    }
-
-    // Return the size of your dataset (invoked by the layout manager)
-    override fun getItemCount() = scooterDB.size
 }
