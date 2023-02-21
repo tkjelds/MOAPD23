@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -38,15 +39,13 @@ class MainFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentMainBinding.inflate(layoutInflater)
         ridesDB = RidesDB.get(requireActivity())
-        adapter = ScooterAdapter(ridesDB.getRidesList())
+        adapter = ScooterAdapter(ridesDB)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         ridesDB = RidesDB.get(requireActivity())
-        println("------ TEST TEST TEST ------")
-        println(ridesDB.getRidesList().get(0).toString())
         binding.scooterRecyclerView.adapter = adapter
         binding.startRideButton.setOnClickListener {
             val intent = Intent(activity, StartRideActivity::class.java)
@@ -64,7 +63,7 @@ class MainFragment : Fragment() {
     }
 }
 
-class ScooterAdapter(private val scooterDB: List<Scooter>) :
+class ScooterAdapter(private val scooterDB: RidesDB) :
     RecyclerView.Adapter<ScooterAdapter.ViewHolder>() {
 
     /**
@@ -75,15 +74,23 @@ class ScooterAdapter(private val scooterDB: List<Scooter>) :
         val NametextView: TextView
         val LocationtextView: TextView
         val TimeStamptextView: TextView
+        val SelectButton: Button
         lateinit var scooter: Scooter
+        lateinit var scooterDB: RidesDB
 
         init {
             // Define click listener for the ViewHolder's View
             NametextView = view.findViewById(R.id.scooterName)
             LocationtextView = view.findViewById(R.id.location)
             TimeStamptextView = view.findViewById(R.id.timeStamp)
+            SelectButton = view.findViewById(R.id.Select_ride_button)
             NametextView.setOnClickListener {
                 Snackbar.make(view, scooter.toString(), Snackbar.LENGTH_SHORT)
+                    .setAnchorView(NametextView).show()
+            }
+            SelectButton.setOnClickListener {
+                scooterDB.setCurrentScooter(scooter)
+                Snackbar.make(view, "New scooter selected : " + scooter.name, Snackbar.LENGTH_SHORT)
                     .setAnchorView(NametextView).show()
             }
         }
@@ -103,7 +110,9 @@ class ScooterAdapter(private val scooterDB: List<Scooter>) :
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        val scooter = scooterDB.get(position)
+        val scooters = scooterDB.getRidesList()
+        val scooter = scooters.get(position)
+        viewHolder.scooterDB = scooterDB
         viewHolder.scooter = scooter
         viewHolder.NametextView.text = scooter.name
         viewHolder.LocationtextView.text = scooter.location
@@ -111,5 +120,5 @@ class ScooterAdapter(private val scooterDB: List<Scooter>) :
     }
 
     // Return the size of your dataset (invoked by the layout manager)
-    override fun getItemCount() = scooterDB.size
+    override fun getItemCount() = scooterDB.getRidesList().count()
 }
