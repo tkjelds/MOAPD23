@@ -8,13 +8,16 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.ItemTouchHelper.*
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import dk.itu.moapd.scootersharing.tokj.ConfirmDeleteRideDialog
 import dk.itu.moapd.scootersharing.tokj.Model.RidesDB
 import dk.itu.moapd.scootersharing.tokj.Model.Scooter
 import dk.itu.moapd.scootersharing.tokj.R
 import dk.itu.moapd.scootersharing.tokj.databinding.FragmentMainBinding
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -55,6 +58,25 @@ class MainFragment : Fragment() {
             val intent = Intent(activity, UpdateRideActivity::class.java)
             startActivity(intent)
         }
+
+        ItemTouchHelper(object : SimpleCallback(0, RIGHT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                // this method is called
+                // when the item is moved.
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val confirmDeleteFragment = ConfirmDeleteRideDialog(viewHolder)
+                fragmentManager?.let { confirmDeleteFragment.show(it, "deleteConfirm") }
+                adapter.notifyDataSetChanged()
+
+            }
+        }).attachToRecyclerView(binding.scooterRecyclerView)
     }
 
     override fun onResume() {
@@ -62,6 +84,7 @@ class MainFragment : Fragment() {
         adapter.notifyDataSetChanged()
     }
 }
+
 
 class ScooterAdapter(private val scooterDB: RidesDB) :
     RecyclerView.Adapter<ScooterAdapter.ViewHolder>() {

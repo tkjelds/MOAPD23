@@ -1,6 +1,5 @@
 package dk.itu.moapd.scootersharing.tokj.Pages
 
-import android.os.Binder
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,12 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.snackbar.Snackbar
 import dk.itu.moapd.scootersharing.tokj.Model.RidesDB
-import dk.itu.moapd.scootersharing.tokj.R
 import dk.itu.moapd.scootersharing.tokj.databinding.FragmentStartRideBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private lateinit var binding: FragmentStartRideBinding
 
 /**
  * A simple [Fragment] subclass.
@@ -26,6 +21,7 @@ class StartRideFragment : Fragment() {
         lateinit var ridesDB: RidesDB
     }
 
+    private lateinit var binding: FragmentStartRideBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,7 +39,7 @@ class StartRideFragment : Fragment() {
             ) {
                 val name = binding.editScooterID.text.toString().trim()
                 val location = binding.editLocationText.text.toString().trim()
-                var foundBike =
+                val foundBike =
                     ridesDB.getRidesList()
                         .find { it.name == name && it.location == location }
                 if (foundBike == null) showScooterSnackBar(

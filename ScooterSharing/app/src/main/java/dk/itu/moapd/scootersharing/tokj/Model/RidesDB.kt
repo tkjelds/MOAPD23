@@ -16,6 +16,14 @@ class RidesDB private constructor(context: Context) {
         currentRide = rides[0]
     }
 
+    fun deleteRide(scooter: Scooter) {
+        rides.remove(scooter)
+    }
+
+    fun getScooterFromID(id: Int): Scooter {
+        return rides[id]
+    }
+
     fun getRidesList(): List<Scooter> {
         return rides
     }
