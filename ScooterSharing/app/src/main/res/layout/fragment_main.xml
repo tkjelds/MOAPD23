@@ -35,7 +35,9 @@
             android:id="@+id/start_ride_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/start_ride" />
+            android:background="@drawable/rounded_corners"
+            android:drawableLeft="@drawable/play"
+            android:text="@string/add_ride" />
 
         <View
             android:layout_width="match_parent"
@@ -45,6 +47,8 @@
             android:id="@+id/update_ride_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corners"
+            android:drawableLeft="@drawable/edit"
             android:text="@string/update_ride" />
     </LinearLayout>
 

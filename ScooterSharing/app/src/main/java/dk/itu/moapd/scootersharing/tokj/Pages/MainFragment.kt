@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package dk.itu.moapd.scootersharing.tokj.Pages
 
 import android.content.Intent
@@ -19,8 +21,6 @@ import dk.itu.moapd.scootersharing.tokj.R
 import dk.itu.moapd.scootersharing.tokj.databinding.FragmentMainBinding
 
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private lateinit var binding: FragmentMainBinding
 
 /**
@@ -72,6 +72,7 @@ class MainFragment : Fragment() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val confirmDeleteFragment = ConfirmDeleteRideDialog(viewHolder)
+
                 fragmentManager?.let { confirmDeleteFragment.show(it, "deleteConfirm") }
                 adapter.notifyDataSetChanged()
 

@@ -39,22 +39,23 @@ class StartRideFragment : Fragment() {
             ) {
                 val name = binding.editScooterID.text.toString().trim()
                 val location = binding.editLocationText.text.toString().trim()
-                val foundBike =
-                    ridesDB.getRidesList()
-                        .find { it.name == name && it.location == location }
-                if (foundBike == null) showScooterSnackBar(
-                    binding.root,
-                    binding.letsRideButton,
-                    "Ride not found",
-                )
-                else {
-                    ridesDB.setCurrentScooter(foundBike)
-                    showScooterSnackBar(
-                        binding.root,
-                        binding.letsRideButton,
-                        "CurrentScooter Set as $foundBike"
-                    )
-                }
+                ridesDB.addScooter(name, location)
+//                val foundBike =
+//                    ridesDB.getRidesList()
+//                        .find { it.name == name && it.location == location }
+//                if (foundBike == null) showScooterSnackBar(
+//                    binding.root,
+//                    binding.letsRideButton,
+//                    "Ride not found",
+//                )
+//                else {
+//                    ridesDB.setCurrentScooter(foundBike)
+//                    showScooterSnackBar(
+//                        binding.root,
+//                        binding.letsRideButton,
+//                        "CurrentScooter Set as $foundBike"
+//                    )
+//                }
                 binding.editLocationText.text.clear()
                 binding.editScooterID.text.clear()
             }

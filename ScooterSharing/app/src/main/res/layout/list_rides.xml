@@ -37,8 +37,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="5sp"
-            android:layout_weight="3"
+            android:layout_weight="4"
+            android:background="@drawable/rounded_corners"
+            android:drawableLeft="@drawable/scooter"
             android:text="@string/select" />
+
     </LinearLayout>
 
 </FrameLayout>
